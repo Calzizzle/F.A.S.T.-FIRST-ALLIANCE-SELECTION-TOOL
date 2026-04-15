@@ -31,7 +31,6 @@ Created by Caleb Russell of FRC Team 7056 -The F.A.S.T. Team (Fowlerville Area S
 - Allainces must be selected in the order they are selected during the event (Captain, Pick 1, Pick 2, and Backup if needed)
 - Because this uses event specific data, if you put this together before the event starts, EPA will appear as 0 and all teams will have the role "Defense/Development"
 - The tabs "Alliances", and "RawData" Are mostly there just for the code to reference. they are auto updated and you should not need to ever edit these.
-- "Dashboard" is also just for reference considering all the data is repeated in "Picklist"
 - "Picklist" is the only tab with the dropdowns for allaince selecting. other options include manually typing them in the "Alliances" tab
 - Before running the program you must create a "Config" tab and add your event key (Refer to "Installation/Deployment")
 - Sheet updates every 5 minutes but if you need it sooner you can hit "FRC Tools" in the menu and click "Update Dashboard"
