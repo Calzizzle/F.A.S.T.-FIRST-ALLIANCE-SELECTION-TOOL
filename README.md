@@ -1,5 +1,6 @@
 # F.A.S.T.-FIRST-ALLIANCE-SELECTION-TOOL-
 A Google Apps Script Javascript that allows for FRC event data to be directly imported into a Google Sheet
+Created by Caleb Russell of FRC Team 7056 -The F.A.S.T. Team (Fowlerville Area Scientific Technicians)
 
 # Features 
 - LIVE EPA and Role breakdown
