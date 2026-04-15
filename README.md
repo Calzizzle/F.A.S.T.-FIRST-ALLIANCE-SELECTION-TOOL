@@ -14,7 +14,7 @@ Created by Caleb Russell of FRC Team 7056 -The F.A.S.T. Team (Fowlerville Area S
 2. Create/Rename a tab to "Config"
 3. In "Config" cell A1 type "Event Key:"
 4. In "Config" cell B1 type your event key for the event you are scouting (i.e. 2026mimas) these keys can be found online at First Inspires and TBA
-5. Go to Extensions>Apps Script>Project Settings>Script Properties>Add Script Property, IN the property name field write TBA_KEY and in the value field, paste your TBA API/Auth Key
+5. Go to Extensions>Apps Script>Project Settings>Script Properties>Add Script Property, In the property name field write TBA_KEY and in the value field, paste your TBA API/Auth Key
 6. While still in Apps Script go to Editor
 7. You should see a default file named Code.gs with a blank Function
 8. If not you can create one by pressing the plus and then "script"
