@@ -29,6 +29,7 @@ Created by Caleb Russell of FRC Team 7056 -The F.A.S.T. Team (Fowlerville Area S
   - Someone must use the dropdown box in the rightmost column in the "Picklist" tab to assign a team to an alliance. The sheet will auto update and that team will be marked as "Picked" and be highlighted red.
 - To undo an alliance pick you can either hit the undo button in the "FRC Tools" menu (Preferred) or you can manually delete them from the Alliances tab (Not Recommended)
 - Allainces must be selected in the order they are selected during the event (Captain, Pick 1, Pick 2, and Backup if needed)
+- Because this uses event specific data, if you put this together before the event starts, EPA will appear as 0 and all teams will have the role "Defense/Development"
 - The tabs "Alliances", and "RawData" Are mostly there just for the code to reference. they are auto updated and you should not need to ever edit these.
 - "Dashboard" is also just for reference considering all the data is repeated in "Picklist"
 - "Picklist" is the only tab with the dropdowns for allaince selecting. other options include manually typing them in the "Alliances" tab
@@ -36,3 +37,38 @@ Created by Caleb Russell of FRC Team 7056 -The F.A.S.T. Team (Fowlerville Area S
 - Sheet updates every 5 minutes but if you need it sooner you can hit "FRC Tools" in the menu and click "Update Dashboard"
 - To undo an alliance selection, there are two methods click "FRC Tools" then "Undo Last Pick" (Recommended) or go to Alliances and manually delete everything except the title (Use only if deletign a large amoutn of alliances)
 - My email is calebrussell92910@gmail.com, Please contact me with any bug reports or issues
+
+# What are the different roles?
+
+- ELITE AUTO SCORER
+High total EPA
+Auto heavily contributes
+Likely autonomous gamepiece specialist
+
+- ELITE POWER SCORER
+Very high teleop EPA
+Primary match carry robot
+
+- AUTO SPECIALIST
+Strong auto compared to teleop
+Likely autonomous-focused bot
+
+- PRIMARY SCORER
+High teleop output
+Core scoring robot in alliance
+
+- HIGH VALUE HYBRID
+Balanced strong robot
+No single dominant phase
+
+- TELEOP RELIABLE
+Consistent mid-high scoring in teleop
+Stable 2nd/3rd pick candidate
+
+- DEFENSIVE / UTILITY
+Low scoring EPA
+Likely defense, cycle disruption, or support
+
+- DEFENSE / DEVELOPMENT
+Very low EPA
+Needs improvement or niche utility role
