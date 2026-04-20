@@ -253,47 +253,51 @@ function classify(e) {
   const auto = e.auto || 0;
   const teleop = e.teleop || 0;
 
+  if (total === 0) return "DEFENSE / DEVELOPMENT";
+
+  const autoRatio = auto / total;
+  const teleopRatio = teleop / total;
+
   // -----------------------------
-  // ELITE LAYER (TOP TEAMS)
+  // ELITE TIER
   // -----------------------------
   if (total >= 60) {
-    if (auto >= 18) return "ELITE AUTO SCORER";
-    if (teleop >= 50) return "ELITE POWER SCORER";
+    if (autoRatio >= 0.35) return "ELITE AUTO SCORER";
+    if (teleopRatio >= 0.75) return "ELITE POWER SCORER";
     return "ELITE ALL-AROUND";
   }
 
   // -----------------------------
-  // HIGH IMPACT TEAMS
+  // HIGH IMPACT
   // -----------------------------
   if (total >= 40) {
-    if (auto > teleop * 0.6) return "AUTO SPECIALIST";
-    if (teleop > 35) return "PRIMARY SCORER";
+    if (autoRatio >= 0.30) return "AUTO SPECIALIST";
+    if (teleopRatio >= 0.70) return "PRIMARY SCORER";
     return "HIGH VALUE HYBRID";
   }
 
   // -----------------------------
-  // MID-TIER TEAMS
+  // MID TIER
   // -----------------------------
   if (total >= 25) {
-    if (teleop > auto * 1.5) return "TELEOP RELIABLE";
-    if (auto > 10) return "AUTO CONTRIBUTOR";
+    if (teleopRatio >= 0.65) return "TELEOP RELIABLE";
+    if (autoRatio >= 0.25) return "AUTO CONTRIBUTOR";
     return "BALANCED SUPPORT";
   }
 
   // -----------------------------
-  // LOW-MID TEAMS
+  // LOW MID
   // -----------------------------
   if (total >= 12) {
-    if (teleop > 15) return "LOW SCORING SUPPORT";
+    if (teleopRatio >= 0.60) return "LOW SCORING SUPPORT";
     return "DEFENSIVE / UTILITY";
   }
 
   // -----------------------------
-  // LOW IMPACT TEAMS
+  // LOW TIER
   // -----------------------------
   return "DEFENSE / DEVELOPMENT";
 }
-
 /**
  * =========================================================
  * API
