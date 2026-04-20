@@ -39,35 +39,27 @@ Created by Caleb Russell of FRC Team 7056 -The F.A.S.T. Team (Fowlerville Area S
 
 # What are the different roles?
 
-- ELITE AUTO SCORER
-High total EPA
-Auto heavily contributes
-Likely autonomous gamepiece specialist
+ELITE AUTO SCORER – High total EPA with a strong share coming from autonomous. Usually an auto-focused specialist that consistently drives early match advantage.
 
-- ELITE POWER SCORER
-Very high teleop EPA
-Primary match carry robot
+ELITE POWER SCORER – Very high total EPA dominated by teleop output. Primary match carry robot that scores heavily during driver control.
 
-- AUTO SPECIALIST
-Strong auto compared to teleop
-Likely autonomous-focused bot
+ELITE ALL-AROUND – High total EPA with balanced auto and teleop contribution. Strong in all phases with no clear weakness.
 
-- PRIMARY SCORER
-High teleop output
-Core scoring robot in alliance
+AUTO SPECIALIST – Auto makes up a large portion of total output. Robot is primarily valuable for autonomous performance and early match control.
 
-- HIGH VALUE HYBRID
-Balanced strong robot
-No single dominant phase
+PRIMARY SCORER – Teleop-heavy robot with strong scoring output during driver control. Main offensive contributor for an alliance.
 
-- TELEOP RELIABLE
-Consistent mid-high scoring in teleop
-Stable 2nd/3rd pick candidate
+HIGH VALUE HYBRID – Balanced contributions between auto and teleop with strong overall EPA. Reliable, flexible playoff pick.
 
-- DEFENSIVE / UTILITY
-Low scoring EPA
-Likely defense, cycle disruption, or support
+TELEOP RELIABLE – Consistent teleop contributor with stable scoring output. Solid mid-to-late pick for sustained performance.
 
-- DEFENSE / DEVELOPMENT
-Very low EPA
-Needs improvement or niche utility role
+AUTO CONTRIBUTOR – Noticeable but not dominant autonomous contribution. Adds value in auto without being a primary focus.
+
+BALANCED SUPPORT – Even distribution of contributions with moderate EPA. Flexible utility robot with no strong specialization.
+
+LOW SCORING SUPPORT – Lower overall scoring impact but still contributes in matches. Often used for niche tasks or backup scoring.
+
+DEFENSIVE / UTILITY – Low scoring output but provides value through defense, disruption, or support roles.
+
+DEFENSE / DEVELOPMENT – Very low total EPA. Primarily defensive, learning, or developing robot with minimal scoring contribution.
+
