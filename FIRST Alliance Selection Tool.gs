@@ -253,6 +253,13 @@ function classify(e) {
   const auto = e.auto || 0;
   const teleop = e.teleop || 0;
 
+  // -----------------------------
+  // HARD DEFENSE OVERRIDE
+  // -----------------------------
+  if (total < 10) {
+    return "DEFENSE / DEVELOPMENT";
+  }
+
   if (total === 0) return "DEFENSE / DEVELOPMENT";
 
   const autoRatio = auto / total;
@@ -294,7 +301,7 @@ function classify(e) {
   }
 
   // -----------------------------
-  // LOW TIER
+  // LOW TIER (fallback)
   // -----------------------------
   return "DEFENSE / DEVELOPMENT";
 }
