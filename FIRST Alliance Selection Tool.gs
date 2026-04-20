@@ -1,4 +1,3 @@
-
 function getStatboticsBase() {
   return "https://api.statbotics.io/v3";
 }
@@ -71,7 +70,7 @@ function updateDashboard() {
 
 /**
  * =========================================================
- * PICKLIST (CORE SYSTEM)
+ * PICKLIST (FIXED CORE SYSTEM)
  * =========================================================
  */
 function updatePicklistOnly() {
@@ -94,32 +93,13 @@ function updatePicklistOnly() {
     role: r[5] || ""
   })).filter(t => t.team);
 
+  // ---------------- PRESERVE ALLIANCES ----------------
   const allianceData = alliances.getDataRange().getValues();
-
-  const pickedTeams = new Set();
   const teamToAlliance = {};
 
   for (let i = 1; i < allianceData.length; i++) {
-    const alliance = allianceData[i][0];
-    const team = allianceData[i][1];
-
-    if (team) {
-      const t = String(team).trim();
-      pickedTeams.add(t);
-      teamToAlliance[t] = alliance;
-    }
+    teamToAlliance[String(allianceData[i][1])] = allianceData[i][0];
   }
-
-  const available = [];
-  const pickedList = [];
-
-  teams.forEach(t => {
-    if (pickedTeams.has(t.team)) pickedList.push(t);
-    else available.push(t);
-  });
-
-  available.sort((a,b)=>b.epa-a.epa);
-  pickedList.sort((a,b)=>b.epa-a.epa);
 
   const output = [
     ["Rank","Team","Name","EPA","Role","Status","Alliance"]
@@ -127,39 +107,35 @@ function updatePicklistOnly() {
 
   let rank = 1;
 
-  available.forEach(t => {
-    output.push([
-      rank++,
-      t.team,
-      t.name,
-      t.epa,
-      t.role,
-      "AVAILABLE",
-      ""
-    ]);
-  });
+  teams
+    .sort((a,b) => b.epa - a.epa)
+    .forEach(t => {
 
-  pickedList.forEach(t => {
-    output.push([
-      "",
-      t.team,
-      t.name,
-      t.epa,
-      t.role,
-      "PICKED",
-      teamToAlliance[t.team] || ""
-    ]);
-  });
+      const isPicked = teamToAlliance[t.team] != null;
+
+      output.push([
+        isPicked ? "" : rank++,
+        t.team,
+        t.name,
+        t.epa,
+        t.role,
+        isPicked ? "PICKED" : "AVAILABLE",
+        teamToAlliance[t.team] || ""
+      ]);
+    });
 
   picklist.clearContents();
-  picklist.getRange(1,1,output.length,7).setValues(output);
+  picklist.getRange(1,1,output.length,output[0].length).setValues(output);
 
+  // ---------------- DROPDOWN (1–8 ALLIANCES) ----------------
   const rule = SpreadsheetApp.newDataValidation()
-    .requireValueInList(["1","2","3","4","5","6","7","8"])
+    .requireValueInList([
+      "1","2","3","4","5","6","7","8"
+    ], true)
     .build();
 
-  if (available.length > 0) {
-    picklist.getRange(2,7,available.length,1).setDataValidation(rule);
+  if (output.length > 1) {
+    picklist.getRange(2,7,output.length-1,1).setDataValidation(rule);
   }
 
   applyStatusColors(picklist);
@@ -167,7 +143,7 @@ function updatePicklistOnly() {
 
 /**
  * =========================================================
- * COLOR SYSTEM (GREEN / RED)
+ * COLOR SYSTEM
  * =========================================================
  */
 function applyStatusColors(sheet) {
@@ -175,23 +151,16 @@ function applyStatusColors(sheet) {
   if (lastRow < 2) return;
 
   const statusRange = sheet.getRange(2, 6, lastRow - 1, 1);
-  const statusValues = statusRange.getValues();
+  const values = statusRange.getValues();
 
-  const backgrounds = [];
+  const colors = values.map(r => {
+    const v = r[0];
+    if (v === "PICKED") return ["#f4cccc"];
+    if (v === "AVAILABLE") return ["#d9ead3"];
+    return ["#ffffff"];
+  });
 
-  for (let i = 0; i < statusValues.length; i++) {
-    const status = statusValues[i][0];
-
-    if (status === "PICKED") {
-      backgrounds.push(["#f4cccc"]); // red
-    } else if (status === "AVAILABLE") {
-      backgrounds.push(["#d9ead3"]); // green
-    } else {
-      backgrounds.push(["#ffffff"]);
-    }
-  }
-
-  statusRange.setBackgrounds(backgrounds);
+  statusRange.setBackgrounds(colors);
 }
 
 /**
@@ -207,14 +176,14 @@ function onEdit(e) {
   if (e.range.getRow() === 1) return;
 
   const alliance = e.range.getValue();
-  const team = sheet.getRange(e.range.getRow(), 2).getValue();
+  const team = String(sheet.getRange(e.range.getRow(), 2).getValue());
 
   if (!alliance || !team) return;
 
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const alliances = ss.getSheetByName("Alliances");
 
-  alliances.appendRow([alliance, String(team)]);
+  alliances.appendRow([alliance, team]);
 
   e.range.clearContent();
 
@@ -224,7 +193,7 @@ function onEdit(e) {
 
 /**
  * =========================================================
- * DRAFT BOARD (8 ALLIANCES)
+ * DRAFT BOARD
  * =========================================================
  */
 function updateDraftBoard() {
@@ -259,7 +228,7 @@ function updateDraftBoard() {
 
 /**
  * =========================================================
- * UNDO LAST PICK
+ * UNDO
  * =========================================================
  */
 function undoLastPick() {
@@ -325,58 +294,63 @@ function classify(e) {
   return "DEFENSE / DEVELOPMENT";
 }
 
-function writeTable(sheet,data){
-  sheet.clearContents();
-
-  const table = [["Team","Name","EPA","Auto","Teleop","Role"]];
-
-  data.forEach(d=>{
-    table.push([d.team,d.name,d.epa,d.auto,d.teleop,d.role]);
-  });
-
-  sheet.getRange(1,1,table.length,table[0].length).setValues(table);
-}
-
 /**
  * =========================================================
- * API FUNCTIONS
+ * API
  * =========================================================
  */
 function fetchTeams(eventKey){
   const res = UrlFetchApp.fetch(
     `${getTBAUrl()}/event/${eventKey}/teams`,
-    {
-      headers: { "X-TBA-Auth-Key": getTBAKey() },
-      muteHttpExceptions: true
-    }
+    { headers: { "X-TBA-Auth-Key": getTBAKey() } }
   );
 
   return JSON.parse(res.getContentText());
 }
 
-function fetchEPA(teams,eventKey){
+function fetchEPA(teams, eventKey){
   const map = {};
   const base = getStatboticsBase();
 
   teams.forEach(t=>{
     try{
       const res = UrlFetchApp.fetch(
-        `${base}/team_event/${t.team_number}/${eventKey}`,
-        { muteHttpExceptions: true }
+        `${base}/team_event/${t.team_number}/${eventKey}`
       );
 
       const d = JSON.parse(res.getContentText());
+      const ep = d?.epa?.total_points;
 
       map[String(t.team_number)] = {
-        total: d?.epa?.total ?? 0,
-        auto: d?.epa?.auto ?? 0,
-        teleop: d?.epa?.teleop ?? 0
+        total: ep?.mean ?? 0,
+        auto: d?.epa?.breakdown?.auto_points ?? 0,
+        teleop: d?.epa?.breakdown?.teleop_points ?? 0
       };
 
     } catch {
-      map[String(t.team_number)] = {total:0,auto:0,teleop:0};
+      map[String(t.team_number)] = { total:0, auto:0, teleop:0 };
     }
   });
 
   return map;
+}
+function writeTable(sheet, data) {
+  sheet.clearContents();
+
+  const table = [
+    ["Team", "Name", "EPA", "Auto", "Teleop", "Role"]
+  ];
+
+  data.forEach(d => {
+    table.push([
+      d.team,
+      d.name,
+      d.epa,
+      d.auto,
+      d.teleop,
+      d.role
+    ]);
+  });
+
+  sheet.getRange(1, 1, table.length, table[0].length).setValues(table);
 }
