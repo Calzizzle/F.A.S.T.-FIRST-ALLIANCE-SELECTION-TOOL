@@ -6,7 +6,7 @@ Created by Caleb Russell of FRC Team 7056 -The F.A.S.T. Team (Fowlerville Area S
 - LIVE EPA and Role breakdown
     - Event Only EPA
     - Scroll to "What are the different Roles" for more info
-- Color Coded, Auto-Sorting alliance "Pick List"
+- Color Coded alliance "Pick List"
 - Picked Alliances are sorted into a "Draft Board"
 
 # INSTALLATION/DEPLOYMENT (START HERE)
